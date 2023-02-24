@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 
-// MAKE a schema for new pizza
+// MAKE a schema for new pizza NOT created
 
 const PizzaSchema = new Schema({
     pizzaName: {
@@ -22,7 +22,7 @@ const PizzaSchema = new Schema({
 });
 
 
-// Create the Pizza model using the PizzaSchema
+// NOW create the Pizza model using the PizzaSchema
 const Pizza = model('Pizza', PizzaSchema);
 
 // export the Pizza model
