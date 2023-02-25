@@ -1,29 +1,51 @@
-const { Schema, model } = require('mongoose');
-
+const { Schema, model } = require("mongoose");
 
 // MAKE a schema for new pizza NOT created
 
-const PizzaSchema = new Schema({
-    pizzaName: {
+const PizzaSchema = new Schema(
+    {
+      pizzaName: {
         type: String
-    },
-    createdBy: {
-        tpye: String
-    },
-    created_at: {
+      },
+      createdBy: {
+        type: String
+      },
+      createdAt: {
         type: Date,
-        default: Date.now
-    },
-    size: {
+        default: Date.now,
+      },
+      size: {
         type: String,
-        default: "Large"
+        default: 'Large'
+      },
+      toppings: [],
+      comments: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Comment'
+        }
+      ]
     },
-    toppings: []
+    {
+      toJSON: {
+        virtuals: true,
+      },
+      id: false
+    }
+  );
+
+
+  
+//VIRTUALS;
+// Virtuals allow you to add virtual properties to a document that aren't stored in the database. They're normally computed values that get evaluated when you try to access their properties.
+
+// This Virtual gets the total count of comments and replies on retrieval
+PizzaSchema.virtual("commentCount").get(function () {
+  return this.comments.length;
 });
 
-
 // NOW create the Pizza model using the PizzaSchema
-const Pizza = model('Pizza', PizzaSchema);
+const Pizza = model("Pizza", PizzaSchema);
 
 // export the Pizza model
 module.exports = Pizza;
