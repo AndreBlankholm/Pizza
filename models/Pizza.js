@@ -24,7 +24,7 @@ const PizzaSchema = new Schema(
       comments: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Comment'
+          ref: 'Comment',
         }
       ]
     },
@@ -43,8 +43,8 @@ const PizzaSchema = new Schema(
 // Virtuals allow you to add virtual properties to a document that aren't stored in the database. They're normally computed values that get evaluated when you try to access their properties.
 
 // This Virtual gets the total count of comments and replies on retrieval
-PizzaSchema.virtual("commentCount").get(function () {
-  return this.comments.length;
+PizzaSchema.virtual('commentCount').get(function() {
+  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 // NOW create the Pizza model using the PizzaSchema
